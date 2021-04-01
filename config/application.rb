@@ -14,6 +14,7 @@ require "action_view/railtie"
 # require "action_cable/engine"
 # require "sprockets/railtie"
 require "rails/test_unit/railtie"
+require "view_component/storybook/engine"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -34,5 +35,11 @@ module Storybook14436
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+        config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '/rails/stories/*', :headers => :any, :methods => [:get]
+      end
+    end
   end
 end
